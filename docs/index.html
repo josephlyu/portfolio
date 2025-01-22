@@ -15,6 +15,16 @@
     <link rel="icon" href="assets/img/icon.png">
     <link rel="stylesheet" href="assets/css/style.css">
 
+    <style>
+      .modal {display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); align-items: center; justify-content: center;}
+      .modal img { max-height: 80%; aspect-ratio: 4 / 5; margin: 0; padding: 0; box-shadow: none; border: none; }
+      .close-btn, .arrow-btn {position: absolute; background: rgba(0, 0, 0, 0.6); color: #fff; border: none; font-size: 24px; cursor: pointer; padding: 10px;}
+      .close-btn {top: 10px; right: 10px;}
+      .arrow-btn {top: 50%; transform: translateY(-50%); border-radius: 50%;}
+      .arrow-left {left: 20px;}
+      .arrow-right {right: 20px;}
+    </style>
+
     <script>window.addEventListener("contextmenu", e => e.preventDefault());</script>
   </head>
 
@@ -36,7 +46,18 @@
 
         <h1>Featured Projects</h1>
         <hr>
-        
+
+        <p><div style="line-height:70%"><h2 style="display:inline;">Truffle's Aspirations</h2></div></p>
+        <p><em><strong>AI-generated Portraits</strong> of my dog, Truffle, created with MidJourney</em></p>
+        <div style="position: relative; aspect-ratio: 12 / 5; overflow: hidden;">
+          <img src="assets/img/truffle1.png" class="thumbnail" style="position: absolute; top: 0; left: 0; width: 33.33%; cursor: pointer;">
+          <img src="assets/img/truffle2.png" class="thumbnail" style="position: absolute; top: 0; left: 33.33%; width: 33.33%; cursor: pointer;">
+          <img src="assets/img/truffle3.png" class="thumbnail" style="position: absolute; top: 0; left: 66.66%; width: 33.33%; cursor: pointer;">
+        </div>
+        <div id="truffleModal" class="modal"><button id="closeModal" class="close-btn">×</button><button id="arrowLeft" class="arrow-btn arrow-left">‹</button><img id="modalImage"><button id="arrowRight" class="arrow-btn arrow-right">›</button></div>
+        <br>
+        <hr>
+
         <p><div style="line-height:70%"><h2 style="display:inline;">Lord of the Rings</h2>&nbsp;&nbsp;&nbsp;<em><a href="https://github.com/josephlyu/Lord-of-the-Rings" target="_blank">GitHub</a> | <a href="https://lotr.shangjielyu.com/" target="_blank">lotr.shangjielyu.com</a></em></div></p>
         <p><em><strong>Network Visualization</strong> for major characters in "The Lord of the Rings"</em></p>
         <p><a href="https://lotr.shangjielyu.com/" target="_blank"><img src="https://lotr.shangjielyu.com/og_img.png"></a></p>
@@ -81,11 +102,23 @@
           <a href="https://www.linkedin.com/in/shangjielyu/" target="_blank" style="padding-left:10px;"><img width="26" height="26" src="assets/img/icon_linkedin.png"></a>
         </p>
 
-        <p><small>COPYRIGHT © 2023</small></p>
+        <p><small>COPYRIGHT © 2025</small></p>
 
       </footer>
     </div>
-
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("truffleModal"), modalImg = document.getElementById("modalImage"), images = ["assets/img/truffle1.png", "assets/img/truffle2.png", "assets/img/truffle3.png"];
+        let idx = 0;
+        const show = i => { idx = i; modal.style.display = "flex"; modalImg.src = images[idx]; update(); };
+        const update = () => { document.getElementById("arrowLeft").style.display = idx === 0 ? "none" : "block"; document.getElementById("arrowRight").style.display = idx === images.length - 1 ? "none" : "block"; };
+        const close = () => (modal.style.display = "none");
+        document.querySelectorAll(".thumbnail").forEach((el, i) => el.onclick = () => show(i));
+        document.getElementById("closeModal").onclick = close;
+        document.getElementById("arrowLeft").onclick = () => { idx--; modalImg.src = images[idx]; update(); };
+        document.getElementById("arrowRight").onclick = () => { idx++; modalImg.src = images[idx]; update(); };
+      });
+    </script>
     <script src="assets/js/scale.fix.js"></script>
   </body>
 </html>
